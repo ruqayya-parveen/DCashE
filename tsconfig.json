@@ -1,7 +1,21 @@
 {
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
-    "types": ["jest"]
+    "types": ["jest"],
+      "resolveJsonModule": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@screens/*": ["./src/screens/*"],
+            "@services/*": ["./src/services/*"],
+            "@components/*": ["./src/components/*"], 
+            "@types/*": ["./src/types/*"],
+            "@utils/*": ["./src/utils/*"],
+      }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["**/node_modules", "**/Pods"]
