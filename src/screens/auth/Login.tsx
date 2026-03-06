@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -42,8 +42,14 @@ export default function Login() {
 
   return (
     <BaseView containerStyles={styles.container}>
-      <View style={styles.inner}>
-        <CustomText style={styles.title}>{t('auth.welcome')}</CustomText>
+      <ScrollView contentContainerStyle={styles.inner}>
+        <CustomText
+          fontSize={FONT_SIZES.thirtyTwo}
+          lineHeight={FONT_SIZES.thirtyTwo}
+          style={styles.title}
+        >
+          {t('auth.welcome')}
+        </CustomText>
         <CustomText style={styles.subtitle}>
           {t('auth.getStartedSecurely')}
         </CustomText>
@@ -64,13 +70,12 @@ export default function Login() {
             <View style={{ justifyContent: 'space-between', flex: 1 }}>
               <View>
                 <CustomInput
-                  placeholder={t('auth.mobileNumber')}
+                  label={t('auth.mobileNumber')}
                   keyboardType="number-pad"
                   value={values.phone}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                 />
-
                 {touched.phone && errors.phone && (
                   <Text style={styles.error}>{errors.phone}</Text>
                 )}
@@ -80,7 +85,7 @@ export default function Login() {
             </View>
           )}
         </Formik>
-      </View>
+      </ScrollView>
     </BaseView>
   );
 }
@@ -104,7 +109,6 @@ const getStyles = (theme: 'light' | 'dark') =>
     },
 
     title: {
-      fontSize: SIZES.thirtyTwo,
       color: COLORS.text?.[theme],
       marginTop: SIZES.forty,
       fontFamily: FONTS.POPPINS_BOLD,

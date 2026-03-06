@@ -1,4 +1,5 @@
 export const colorList = {
+  transparent: "rgba(255, 255, 255, 0)",
   /* Brand */
   primary: "#D8A96D",
   primaryText: "#1A1A1A",
@@ -36,6 +37,7 @@ export const colorList = {
 
 
 export const COLORS = {
+  transparent: colorList.transparent,
   primary: colorList.primary,
   primaryTint: colorList.primary,
   critical: colorList.critical,

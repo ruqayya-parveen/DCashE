@@ -1,24 +1,23 @@
-/* eslint-disable react-native/no-inline-styles */
 import { FONTS } from '@/constants/fonts';
 import { SIZES } from '@/constants/size';
 import React, { forwardRef, useMemo, useState } from 'react';
 import {
-  View,
-  TextInput,
   TextInputProps,
   StyleSheet,
   TextStyle,
   ViewStyle,
-  TextInput as RNTextInput,
-  TouchableOpacity,
+  View,
 } from 'react-native';
-import CustomText from './CustomText';
+import { TextInput, TextInputIconProps } from 'react-native-paper';
 import { useTheme } from '@/hooks/useTheme';
 import { COLORS } from '@/constants';
+import { ColorValue } from 'react-native/types_generated/index';
 
 interface CustomInputProps extends TextInputProps {
   label?: string;
   value?: string;
+  outlineColor?: string;
+  activeOutlineColor?: string;
   onChangeText?: (text: string) => void;
   leftChild?: React.ReactNode;
   rightChild?: React.ReactNode;
@@ -37,23 +36,18 @@ interface CustomInputProps extends TextInputProps {
   disabled?: boolean;
 }
 
-const CustomInput = forwardRef<RNTextInput, CustomInputProps>(
+const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
   (
     {
       label,
       value,
+      inputStyle,
+      outlineColor,
+      activeOutlineColor,
       onChangeText,
       leftChild,
       rightChild,
-      containerStyle,
-      parentWrapperStyle,
-      inputStyle,
-      labelStyle,
-      hideLabel = true,
-      hasError = false,
-      error,
       isPassword = false,
-      errorTextStyle,
       disabled = false,
       showCharCount = false,
       maxCharacters = 200,
@@ -68,88 +62,50 @@ const CustomInput = forwardRef<RNTextInput, CustomInputProps>(
 
     return (
       <View
-        style={[
-          styles.wrapper,
-          parentWrapperStyle,
-          { opacity: disabled ? 0.6 : 1 },
-        ]}
+        style={{
+          // backgroundColor: 'red',
+          padding: SIZES.two,
+          borderRadius: SIZES.eight,
+        }}
       >
-        {/* Show label only if provided and not hidden */}
-        {label && !hideLabel && (
-          <CustomText style={[styles.label, labelStyle]}>{label}</CustomText>
-        )}
-
-        <View
-          style={[
-            styles.container,
-            {
-              borderColor: hasError
-                ? COLORS.critical
-                : COLORS.secondaryBackground?.[theme],
+        <TextInput
+          ref={ref}
+          mode="outlined"
+          label={label}
+          editable={!disabled}
+          left={leftChild}
+          right={rightChild}
+          outlineColor={outlineColor || COLORS.secondaryBackground?.[theme]}
+          activeOutlineColor={
+            activeOutlineColor || COLORS.secondaryText?.[theme]
+          }
+          textColor={COLORS.text?.[theme]}
+          cursorColor={COLORS.primary as ColorValue}
+          theme={{
+            colors: {
+              // onSurfaceVariant: 'green',
             },
-            containerStyle,
+          }}
+          style={[
+            styles.input,
+            inputStyle,
+            // {
+            //   height: props.multiline ? SIZES.twoHundred : 'auto',
+            //   textAlignVertical: 'top',
+            // },
           ]}
-        >
-          {leftChild && <View style={styles.sideChild}>{leftChild}</View>}
-
-          <TextInput
-            ref={ref}
-            editable={!disabled}
-            style={[
-              styles.input,
-              inputStyle,
-              {
-                height: props.multiline ? SIZES.twoHundred : 'auto',
-                textAlignVertical: 'top',
-              },
-            ]}
-            placeholderTextColor={COLORS.secondaryText?.[theme]}
-            value={value}
-            maxLength={maxCharacters}
-            secureTextEntry={isPassword && !showValue}
-            onChangeText={val => {
-              if (showCharCount && (val?.length ?? 0) > maxCharacters) {
-                return;
-              }
-              onChangeText ? onChangeText(val) : console.log(val);
-            }}
-            {...props}
-          />
-          {isPassword && (
-            <TouchableOpacity
-              hitSlop={20}
-              onPress={() => setShowValue(!showValue)}
-            >
-              {showValue ? (
-                // <SVGS.eyeOpen
-                //   height={SIZES.twentyFour}
-                //   width={SIZES.twentyFour}
-                // />
-                <View />
-              ) : (
-                // <SVGS.eyeClose
-                //   height={SIZES.twentyFour}
-                //   width={SIZES.twentyFour}
-                // />
-                <View />
-              )}
-            </TouchableOpacity>
-          )}
-          {rightChild && <View style={styles.sideChild}>{rightChild}</View>}
-        </View>
-
-        {showCharCount && (
-          <CustomText style={{ textAlign: 'right' }}>
-            {value?.length || 0}/{maxCharacters}
-          </CustomText>
-        )}
-
-        {/* Error message */}
-        {hasError && !!error && (
-          <CustomText style={[styles.errorText, errorTextStyle]}>
-            {error}
-          </CustomText>
-        )}
+          placeholderTextColor={COLORS.secondaryText?.[theme]}
+          value={value}
+          maxLength={maxCharacters}
+          secureTextEntry={isPassword && !showValue}
+          onChangeText={val => {
+            if (showCharCount && (val?.length ?? 0) > maxCharacters) {
+              return;
+            }
+            onChangeText ? onChangeText(val) : console.log(val);
+          }}
+          {...props}
+        />
       </View>
     );
   },
@@ -179,12 +135,13 @@ const getStyles = (theme: 'light' | 'dark') =>
       backgroundColor: COLORS.background?.[theme],
     },
     input: {
-      flex: 1,
+      // flex: 1,
       fontSize: SIZES.sixteen,
       color: COLORS.text?.[theme],
       fontFamily: FONTS.POPPINS_LIGHT,
       textAlignVertical: 'center',
-      paddingVertical: SIZES.ten,
+      borderRadius: SIZES.fourteen,
+      backgroundColor: COLORS.background?.[theme],
     },
     sideChild: {
       justifyContent: 'center',

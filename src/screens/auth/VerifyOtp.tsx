@@ -1,15 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 import BaseView from '@/components/BaseView';
 import CustomHeader from '@/components/CustomHeader';
+import CustomOtpInput from '@/components/CustomOtpInput';
 import CustomText from '@/components/CustomText';
-import { COLORS, FONT_SIZES, FONTS, SIZES } from '@/constants';
+import {
+  COLORS,
+  FONT_SIZES,
+  FONTS,
+  RESEND_OTP_INTERVAL_IN_SECONDS,
+  SIZES,
+} from '@/constants';
 import { useTheme } from '@/hooks/useTheme';
 import { AuthScreensRouteList } from '@/types/navigationTypes';
 import { useRoute } from '@react-navigation/native';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet, Switch } from 'react-native';
-import OTPTextInput from 'react-native-otp-textinput';
+import { View, StyleSheet, Switch, ScrollView } from 'react-native';
+// import OTPTextInput from 'react-native-otp-textinput';
+import Toast from 'react-native-toast-message';
 
 export default function VerifyOtp() {
   const route = useRoute<AuthScreensRouteList<'VerifyOtp'>>();
@@ -17,11 +25,26 @@ export default function VerifyOtp() {
   const { theme } = useTheme();
   const styles = useMemo(() => getStyles(theme), [theme]);
   const phoneNumber = route.params?.phoneNumber;
+  const [resendTime, setResendTime] = useState(RESEND_OTP_INTERVAL_IN_SECONDS);
+  const [otp, setOpt] = useState('');
   const otpInput = useRef(null);
 
   const [whatsapp, setWhatsapp] = useState(true);
 
+  useEffect(() => {
+    if (resendTime === 0) return;
+    const timeInterval = setInterval(() => {
+      if (resendTime > 0) {
+        setResendTime(resendTime - 1);
+      } else {
+        setResendTime(0);
+      }
+    }, 1000);
+    return () => clearInterval(timeInterval);
+  }, [resendTime]);
+
   const handleOtpChange = (code: string) => {
+    setOpt(code);
     if (code.length === 4) {
       console.log('OTP:', code);
       verifyOtp(code);
@@ -32,10 +55,21 @@ export default function VerifyOtp() {
     console.log(code);
   };
 
+  const resendOtp = () => {
+    setResendTime(RESEND_OTP_INTERVAL_IN_SECONDS);
+    setOpt('');
+    Toast.show({
+      type: 'customToast',
+      props: { msgType: 'success' },
+      text1: t('toastMessage.optSentSuccessfully'),
+      position: 'bottom',
+    });
+  };
+
   return (
     <BaseView removeTopPadding containerStyles={styles.container}>
       <CustomHeader title={t('auth.otpVerification')} />
-      <View style={{ paddingHorizontal: SIZES.twenty }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: SIZES.twenty }}>
         <CustomText fontSize={FONT_SIZES.twentyEight} style={styles.title}>
           {t('auth.letsVerifyYourNumber')}
         </CustomText>
@@ -44,19 +78,27 @@ export default function VerifyOtp() {
           {t('auth.weHaveSentaCode', { phoneNumber })}
         </CustomText>
 
-        <OTPTextInput
+        <CustomOtpInput
           ref={otpInput}
           inputCount={4}
-          handleTextChange={handleOtpChange}
+          value={otp}
+          onChange={handleOtpChange}
           containerStyle={{ justifyContent: 'center' }}
           textInputStyle={styles.otpBox}
           tintColor="#D8A96D"
           offTintColor="#444"
         />
 
-        <CustomText fontSize={FONT_SIZES.fourteen} style={styles.timer}>
-          {t('auth.youCanRequestOtpAgain')}
-        </CustomText>
+        {resendTime ? (
+          <CustomText fontSize={FONT_SIZES.fourteen} style={styles.timer}>
+            {t('auth.youCanRequestOtpAgain', { seconds: resendTime })}
+          </CustomText>
+        ) : (
+          <CustomText onPress={resendOtp} style={styles.timer}>
+            {t('auth.didntReceiveOtp')}
+            <CustomText> {t('auth.resendOtp')}</CustomText>
+          </CustomText>
+        )}
 
         <View style={styles.whatsappRow}>
           <CustomText
@@ -76,7 +118,7 @@ export default function VerifyOtp() {
             }}
           />
         </View>
-      </View>
+      </ScrollView>
     </BaseView>
   );
 }

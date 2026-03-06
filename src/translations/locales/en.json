@@ -11,8 +11,10 @@
         "otpVerification": "Otp Verification",
         "letsVerifyYourNumber": "Let's verify your number",
         "weHaveSentaCode": "We've sent a 4-Digit code to your {{phoneNumber}}",
-        "youCanRequestOtpAgain": "You can request OTP again in 28 secs",
-        "getUpdatesOverWhatsApp": "Get updates over Whatsapp"
+        "youCanRequestOtpAgain": "You can request OTP again in {{seconds}} secs",
+        "getUpdatesOverWhatsApp": "Get updates over Whatsapp",
+        "didntReceiveOtp": "Didn't receive an OTP?",
+        "resendOtp": "Resend OTP"
     },
     
     "toastMessage": {
