@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import React, { PropsWithChildren, ReactNode } from "react";
+/* eslint-disable react-native/no-inline-styles */
+import { StyleSheet, View, ViewStyle } from "react-native";
+import React, { PropsWithChildren } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
@@ -16,11 +17,10 @@ const BaseView = ({
 }: PropsWithChildren<Props>) => {
   const insets = useSafeAreaInsets();
   return (
-    <View style={{
+    <View style={[{
         paddingTop: removeTopPadding ? 0 : insets?.top,
         paddingBottom: removeBottomPadding ? 0 : insets?.bottom
-    }}>
-      <Text>BaseView</Text>
+    }, containerStyles]}>
       {children}
     </View>
   );

@@ -1,7 +1,6 @@
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { ImageProps } from "react-native";
+
 
 export type RootParamList = {
   SplashScreen: undefined;
@@ -19,6 +18,7 @@ export type RootParamList = {
 
 export type AuthParamList = {
   Login: undefined;
+  VerifyOtp: {phoneNumber: number} | undefined;
 };
 
 export type AppParamList = {

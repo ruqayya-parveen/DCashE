@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { ComponentType } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { AuthParamList } from "@/types/navigationTypes";
-import Login from "@/screens/auth/Login";
+import { StyleSheet, Text, View } from 'react-native';
+import React, { ComponentType } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AuthParamList } from '@/types/navigationTypes';
+import Login from '@/screens/auth/Login';
+import VerifyOtp from '@/screens/auth/VerifyOtp';
 const Stack = createStackNavigator<AuthParamList>();
 
 type TScreenItem = {
@@ -12,15 +13,19 @@ type TScreenItem = {
 
 const screens: TScreenItem[] = [
   {
-    name: "Login",
+    name: 'Login',
     component: Login,
+  },
+  {
+    name: 'VerifyOtp',
+    component: VerifyOtp,
   },
 ];
 
 const AuthStackNavigator = () => {
   return (
-    <Stack.Navigator>
-      {screens.map((screen) => (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {screens.map(screen => (
         <Stack.Screen name={screen.name} component={screen.component} />
       ))}
     </Stack.Navigator>

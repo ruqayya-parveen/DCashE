@@ -2,5 +2,22 @@
     "hello": "Hello in english",
     "test": {
         "common": "Common"
+    },
+    "auth": {
+        "welcome": "Welcome!",
+        "getStartedSecurely": "Get Started Securely",
+        "mobileNumber": "Mobile Number",
+        "getOtp": "Get OTP",
+        "otpVerification": "Otp Verification",
+        "letsVerifyYourNumber": "Let's verify your number",
+        "weHaveSentaCode": "We've sent a 4-Digit code to your {{phoneNumber}}",
+        "youCanRequestOtpAgain": "You can request OTP again in 28 secs",
+        "getUpdatesOverWhatsApp": "Get updates over Whatsapp"
+    },
+    
+    "toastMessage": {
+        "optSentSuccessfully": "OTP sent successfully!",
+        "otpInvalid": "OTP invalid",
+        "loggedInSuccessfully": "Logged in successfully!" 
     }
 }

@@ -1,9 +1,9 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import AuthStackNavigator from "./AuthStackNavigator";
-import SplashScreen from "@/screens/auth/SplashScreen";
-import AppStackNavigator from "./AppStackNavigator";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AuthStackNavigator from './AuthStackNavigator';
+import SplashScreen from '@/screens/auth/SplashScreen';
+import AppStackNavigator from './AppStackNavigator';
 
 const Stack = createStackNavigator();
 
@@ -11,13 +11,12 @@ const Router = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={"Splash"} component={SplashScreen} />
-        <Stack.Screen name={"AuthStack"} component={AuthStackNavigator} />
-        <Stack.Screen name={"AppStack"} component={AppStackNavigator} />
+        <Stack.Screen name={'Splash'} component={SplashScreen} />
+        <Stack.Screen name={'AuthNavigator'} component={AuthStackNavigator} />
+        <Stack.Screen name={'AppNavigator'} component={AppStackNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default Router;
-

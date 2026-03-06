@@ -9,14 +9,20 @@ import Router from '@/nativators/Router';
 import { StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import '@/translations/i18next';
+import { ThemeProvider } from '@/hooks/useTheme';
+import Toast from 'react-native-toast-message';
+import toastConfig from '@/components/ToastConfig';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <ThemeProvider>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <AppContent />
+        <Toast config={toastConfig} />
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 }
