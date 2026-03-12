@@ -61,7 +61,17 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
     // const [valueText, setValueText] = useState(value)
 
     return (
-      <GradientBorderWrapper focused={isFocused} error={hasError}>
+      <GradientBorderWrapper
+        focused={isFocused}
+        error={hasError}
+        colors={{
+          background: COLORS.background?.[theme],
+          solidError: COLORS.critical,
+          solidNormal: COLORS.secondaryBackground?.[theme],
+          gradientPrimary: COLORS.primary,
+          gradientSecondary: COLORS.border?.[theme],
+        }}
+      >
         <TextInput
           ref={ref}
           mode="outlined"
@@ -102,7 +112,7 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
               // height: props.multiline ? SIZES.twoHundred : 'auto',
               // textAlignVertical: 'top',
               borderRadius: borderRadius,
-              backgroundColor: 'transparent',
+              backgroundColor: COLORS.background?.[theme],
               marginTop: label ? -SIZES.six : 0,
             },
             inputStyle,

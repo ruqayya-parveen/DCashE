@@ -179,9 +179,6 @@ const getStyles = (theme: 'light' | 'dark') =>
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 30,
-    },
-
-    whatsappText: {
-      color: '#fff',
+      gap: SIZES.four,
     },
   });

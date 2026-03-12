@@ -57,14 +57,25 @@ const GradientBorderWrapper = ({
     >
       {/* Inner content */}
       {error ? (
-        <RNLiearGradient
-          colors={[colors.solidError, colors.background]}
-          start={{ x: 3, y: 0.5 }}
-          end={{ x: 0.4, y: 0.5 }}
-          style={{ flex: 1, borderRadius }}
-        >
-          {children}
-        </RNLiearGradient>
+        <>
+          <RNLiearGradient
+            pointerEvents="none"
+            colors={[colors.solidError, colorList.transparent]}
+            start={{ x: 3, y: 0.5 }}
+            end={{ x: 0.4, y: 0.5 }}
+            style={{
+              flex: 1,
+              borderRadius,
+              overflow: 'visible',
+              zIndex: 2,
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+          <View style={[{ borderRadius }, innerStyle]}>{children}</View>
+          {/* </RNLiearGradient> */}
+        </>
       ) : (
         <View style={[{ borderRadius, backgroundColor }, innerStyle]}>
           {children}
@@ -74,9 +85,15 @@ const GradientBorderWrapper = ({
       {w > 0 && h > 0 && (
         <View
           pointerEvents="none"
-          style={{ position: 'absolute', top: 0, left: 0, width: w, height: h }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: w,
+            height: h,
+          }}
         >
-          <Svg width={w} height={h}>
+          <Svg width={w} height={h} style={{ zIndex: -1 }}>
             <Defs>
               {/* Focused: grey → gold → grey */}
               <LinearGradient

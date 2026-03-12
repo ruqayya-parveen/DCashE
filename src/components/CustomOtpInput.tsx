@@ -14,7 +14,7 @@ export default function CustomOtpInput({
   length = OTP_LENGTH,
   value,
   onChange,
-  error
+  error,
 }: CustomOtpInputProps) {
   const inputs = useRef<(typeof CustomInput)[]>([]);
 
