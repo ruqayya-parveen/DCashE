@@ -1,22 +1,19 @@
+/* eslint-disable react-native/no-inline-styles */
 import { FONTS } from '@/constants/fonts';
 import { SIZES } from '@/constants/size';
 import React, { forwardRef, useMemo, useState } from 'react';
-import {
-  TextInputProps,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-  View,
-} from 'react-native';
+import { TextInputProps, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { TextInput, TextInputIconProps } from 'react-native-paper';
 import { useTheme } from '@/hooks/useTheme';
 import { COLORS } from '@/constants';
-import { ColorValue } from 'react-native/types_generated/index';
+import CustomText from './CustomText';
+import GradientBorderWrapper from './GlowGradientWrapper';
 
 interface CustomInputProps extends TextInputProps {
   label?: string;
   value?: string;
   outlineColor?: string;
+  borderRadius?: number;
   activeOutlineColor?: string;
   onChangeText?: (text: string) => void;
   leftChild?: React.ReactNode;
@@ -33,7 +30,6 @@ interface CustomInputProps extends TextInputProps {
   hasError?: boolean;
   error?: string;
   errorTextStyle?: TextStyle;
-  disabled?: boolean;
 }
 
 const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
@@ -43,14 +39,17 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
       value,
       inputStyle,
       outlineColor,
+      borderRadius,
       activeOutlineColor,
       onChangeText,
       leftChild,
       rightChild,
       isPassword = false,
-      disabled = false,
       showCharCount = false,
       maxCharacters = 200,
+      hasError,
+      // error,
+      // errorTextStyle,
       ...props
     },
     ref,
@@ -58,41 +57,55 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
     const { theme } = useTheme();
     const styles = useMemo(() => getStyles(theme), [theme]);
     const [showValue, setShowValue] = useState(false);
-    // const [valueText, setValueText] = useState(value);
+    const [isFocused, setIsFocused] = useState(false);
+    // const [valueText, setValueText] = useState(value)
 
     return (
-      <View
-        style={{
-          // backgroundColor: 'red',
-          padding: SIZES.two,
-          borderRadius: SIZES.eight,
-        }}
-      >
+      <GradientBorderWrapper focused={isFocused} error={hasError}>
         <TextInput
           ref={ref}
           mode="outlined"
-          label={label}
-          editable={!disabled}
+          label={
+            label && (
+              <CustomText
+                style={{
+                  backgroundColor: COLORS.background?.[theme],
+                  // paddingHorizontal: SIZES.twenty,
+                  // marginHorizontal: SIZES.twenty,
+                }}
+              >
+                {label}
+              </CustomText>
+            )
+          }
           left={leftChild}
           right={rightChild}
           outlineColor={outlineColor || COLORS.secondaryBackground?.[theme]}
-          activeOutlineColor={
-            activeOutlineColor || COLORS.secondaryText?.[theme]
-          }
+          activeOutlineColor={activeOutlineColor || COLORS.border?.[theme]}
+          outlineStyle={{
+            borderColor: COLORS.transparent,
+            outlineColor: COLORS.transparent,
+          }}
           textColor={COLORS.text?.[theme]}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           cursorColor={COLORS.primary as ColorValue}
           theme={{
             colors: {
               // onSurfaceVariant: 'green',
+              background: COLORS.background?.[theme],
             },
           }}
           style={[
             styles.input,
+            {
+              // height: props.multiline ? SIZES.twoHundred : 'auto',
+              // textAlignVertical: 'top',
+              borderRadius: borderRadius,
+              backgroundColor: 'transparent',
+              marginTop: label ? -SIZES.six : 0,
+            },
             inputStyle,
-            // {
-            //   height: props.multiline ? SIZES.twoHundred : 'auto',
-            //   textAlignVertical: 'top',
-            // },
           ]}
           placeholderTextColor={COLORS.secondaryText?.[theme]}
           value={value}
@@ -106,7 +119,7 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
           }}
           {...props}
         />
-      </View>
+      </GradientBorderWrapper>
     );
   },
 );

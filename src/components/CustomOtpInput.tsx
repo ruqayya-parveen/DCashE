@@ -7,12 +7,14 @@ interface CustomOtpInputProps {
   length?: number;
   value: string;
   onChange: (otp: string) => void;
+  error?: boolean;
 }
 
 export default function CustomOtpInput({
   length = OTP_LENGTH,
   value,
   onChange,
+  error
 }: CustomOtpInputProps) {
   const inputs = useRef<(typeof CustomInput)[]>([]);
 
@@ -43,12 +45,15 @@ export default function CustomOtpInput({
           ref={ref => {
             if (ref) inputs.current[index] = ref;
           }}
-          inputStyle={{ width: SIZES.forty, height: SIZES.forty }}
+          inputStyle={{
+            ...styles.input,
+          }}
           keyboardType="number-pad"
           maxLength={1}
           value={value[index] || ''}
           onChangeText={text => handleChange(text, index)}
           onKeyPress={e => handleKeyPress(e, index)}
+          hasError={error}
         />
       ))}
     </View>
@@ -59,16 +64,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
+    gap: SIZES.four,
   },
 
   input: {
-    width: 50,
-    height: 50,
-    borderWidth: 1,
-    borderColor: '#444',
-    borderRadius: 8,
-    textAlign: 'center',
-    fontSize: 18,
+    width: SIZES.fifty,
+    height: SIZES.fifty,
+    borderRadius: SIZES.eight,
+    textAlign: 'left',
+    paddingLeft: SIZES.four,
+    fontSize: SIZES.eighteen,
     color: '#fff',
   },
 });

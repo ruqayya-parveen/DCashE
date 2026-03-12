@@ -15,7 +15,7 @@ import { AuthScreensRouteList } from '@/types/navigationTypes';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet, Switch, ScrollView } from 'react-native';
+import { View, StyleSheet, Switch, ScrollView, Keyboard } from 'react-native';
 // import OTPTextInput from 'react-native-otp-textinput';
 import Toast from 'react-native-toast-message';
 
@@ -27,6 +27,7 @@ export default function VerifyOtp() {
   const phoneNumber = route.params?.phoneNumber;
   const [resendTime, setResendTime] = useState(RESEND_OTP_INTERVAL_IN_SECONDS);
   const [otp, setOpt] = useState('');
+  const [isOtpValid, setIsOtpValid] = useState(true);
   const otpInput = useRef(null);
 
   const [whatsapp, setWhatsapp] = useState(true);
@@ -52,7 +53,19 @@ export default function VerifyOtp() {
   };
 
   const verifyOtp = (code: string) => {
-    console.log(code);
+    Keyboard.dismiss();
+    if (code === '2222') {
+      setIsOtpValid(true);
+      console.log(code);
+    } else {
+      setIsOtpValid(false);
+      Toast.show({
+        type: 'customToast',
+        text1: t('toastMessage.otpInvalid'),
+        props: { msgType: 'error' },
+        position: 'bottom',
+      });
+    }
   };
 
   const resendOtp = () => {
@@ -82,6 +95,7 @@ export default function VerifyOtp() {
           ref={otpInput}
           inputCount={4}
           value={otp}
+          error={!isOtpValid}
           onChange={handleOtpChange}
           containerStyle={{ justifyContent: 'center' }}
           textInputStyle={styles.otpBox}

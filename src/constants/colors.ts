@@ -27,7 +27,7 @@ export const colorList = {
 
   /* Dark theme */
   darkBackgroundPrimary: "#0B0B0F",
-  darkBackgroundSecondary: "#53443dff",
+  darkBackgroundSecondary: "#61605fff",
   darkTextPrimary: "#FFFFFF",
   darkTextSecondary: "#A1A1A1",
   darkBorder: "#3A3A3C",

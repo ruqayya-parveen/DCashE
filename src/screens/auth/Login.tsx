@@ -3,8 +3,6 @@ import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
-import { AuthScreensParamList } from '@/types/navigationTypes';
 import { COLORS, FONT_SIZES, FONTS, SIZES } from '@/constants';
 import BaseView from '@/components/BaseView';
 import { useTheme } from '@/hooks/useTheme';
@@ -13,6 +11,7 @@ import CustomInput from '@/components/CustomInput';
 import CustomText from '@/components/CustomText';
 import CustomButton from '@/components/CustomButton';
 import Toast from 'react-native-toast-message';
+import { navigateTo } from '@/utils/navigationUtils';
 
 const phoneRegex = /^[6-9]\d{9}$/;
 
@@ -23,13 +22,13 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  const navigation = useNavigation<AuthScreensParamList<'Login'>>();
   const { theme } = useTheme();
   const { t } = useTranslation();
   const styles = useMemo(() => getStyles(theme), [theme]);
 
   const onSubmit = values => {
-    navigation.navigate('VerifyOtp', { phoneNumber: values.phone });
+    navigateTo('VerifyOtp', { phoneNumber: values.phone });
+
     Toast.show({
       type: 'customToast',
       text1: 'Verification code sent',
@@ -75,6 +74,8 @@ export default function Login() {
                   value={values.phone}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
+                  hasError={!!errors?.phone}
+                  borderRadius={SIZES.eight}
                 />
                 {touched.phone && errors.phone && (
                   <Text style={styles.error}>{errors.phone}</Text>

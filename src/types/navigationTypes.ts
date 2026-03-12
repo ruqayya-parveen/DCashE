@@ -30,6 +30,8 @@ export type SplashScreenParamList = StackNavigationProp<
   "SplashScreen"
 >;
 
+export type AuthScope = AuthParamList;
+
 export type AuthScreensParamList<T extends keyof AuthParamList> =
   CompositeNavigationProp<
     StackNavigationProp<RootParamList, "AuthNavigator">,

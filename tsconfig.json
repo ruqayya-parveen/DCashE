@@ -17,6 +17,6 @@
             "@utils/*": ["./src/utils/*"],
       }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "src/utils/navigationUtils.js"],
   "exclude": ["**/node_modules", "**/Pods"]
 }

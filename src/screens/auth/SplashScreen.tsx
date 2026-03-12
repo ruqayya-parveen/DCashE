@@ -3,15 +3,12 @@ import React, { useEffect } from 'react';
 import BaseView from '@/components/BaseView';
 import { SVGS } from '@/constants/imagePath';
 import { DIMENSIONS } from '@/constants';
-import { useNavigation } from '@react-navigation/native';
-import { RootNavigatorParams } from '@/types/navigationTypes';
+import { replaceTo } from '@/utils/navigationUtils';
 
 const SplashScreen = () => {
-  const navigation = useNavigation<RootNavigatorParams<'SplashScreen'>>();
-
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('AuthNavigator');
+      replaceTo('AuthNavigator', { screen: 'Login' });
     }, 2000);
   });
 
