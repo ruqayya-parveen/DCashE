@@ -1,12 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   StatusBar,
-  TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle,
 } from 'react-native';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomText from './CustomText';
 import { SIZES } from '@/constants/size';
@@ -15,20 +13,8 @@ import { FONTS } from '@/constants/fonts';
 import { useTheme } from '@/hooks/useTheme';
 import { COLORS } from '@/constants';
 
-type Props = {
-  leftChild?: ReactNode;
-  rightChild?: ReactNode;
-  bottomChild?: ReactNode;
-  renderCustomTitleComponent?: ReactNode;
-  title?: string;
-  showBack?: boolean;
-  showTitle?: boolean;
-  leftOnPress?: () => void;
-  customContainerStyles?: ViewStyle;
-  customTextStyle?: TextStyle;
-};
 
-const CustomHeader: React.FC<Props> = ({
+const CustomHeader= ({
   leftChild,
   rightChild,
   bottomChild,

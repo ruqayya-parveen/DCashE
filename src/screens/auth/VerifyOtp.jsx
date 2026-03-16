@@ -11,7 +11,6 @@ import {
   SIZES,
 } from '@/constants';
 import { useTheme } from '@/hooks/useTheme';
-import { AuthScreensRouteList } from '@/types/navigationTypes';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +19,7 @@ import { View, StyleSheet, Switch, ScrollView, Keyboard } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export default function VerifyOtp() {
-  const route = useRoute<AuthScreensRouteList<'VerifyOtp'>>();
+  const route = useRoute();
   const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = useMemo(() => getStyles(theme), [theme]);
@@ -44,7 +43,7 @@ export default function VerifyOtp() {
     return () => clearInterval(timeInterval);
   }, [resendTime]);
 
-  const handleOtpChange = (code: string) => {
+  const handleOtpChange = (code) => {
     setOpt(code);
     if (code.length === 4) {
       console.log('OTP:', code);
@@ -52,7 +51,7 @@ export default function VerifyOtp() {
     }
   };
 
-  const verifyOtp = (code: string) => {
+  const verifyOtp = (code) => {
     Keyboard.dismiss();
     if (code === '2222') {
       setIsOtpValid(true);
@@ -137,7 +136,7 @@ export default function VerifyOtp() {
   );
 }
 
-const getStyles = (theme: 'light' | 'dark') =>
+const getStyles = (theme) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -158,8 +157,8 @@ const getStyles = (theme: 'light' | 'dark') =>
     },
 
     otpBox: {
-      width: SIZES.forty,
-      height: SIZES.forty,
+      // width: SIZES.forty,
+      // height: SIZES.forty,
       borderWidth: 1,
       borderBottomWidth: 1,
       borderColor: '#444',

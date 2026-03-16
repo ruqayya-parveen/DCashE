@@ -1,20 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
-import { StyleSheet, View, ViewStyle } from "react-native";
-import React, { PropsWithChildren } from "react";
+import { View } from "react-native";
+import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type Props = {
-  removeTopPadding?: boolean;
-  removeBottomPadding?: boolean;
-  containerStyles?: ViewStyle;
-};
 
 const BaseView = ({
   children,
   removeBottomPadding,
   removeTopPadding,
   containerStyles,
-}: PropsWithChildren<Props>) => {
+}) => {
   const insets = useSafeAreaInsets();
   return (
     <View style={[{
@@ -28,4 +23,3 @@ const BaseView = ({
 
 export default BaseView;
 
-const styles = StyleSheet.create({});

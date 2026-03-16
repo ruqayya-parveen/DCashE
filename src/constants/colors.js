@@ -18,16 +18,16 @@ export const colorList = {
 
   /* Light theme */
   lightBackgroundPrimary: "#FFFFFF",
-  lightBackgroundSecondary: "#c2bbbbff",
+  lightBackgroundSecondary: "#746f6fff",
   lightTextPrimary: "#111111",
   lightTextSecondary: "#6B6B6B",
-  lightBorder: "#E5E5E5",
+  lightBorder: "#a6a0a0ff",
   lightOtpBorder: "#D1D1D6",
   lightDivider: "#E5E5EA",
 
   /* Dark theme */
   darkBackgroundPrimary: "#0B0B0F",
-  darkBackgroundSecondary: "#61605fff",
+  darkBackgroundSecondary: "#494948ff",
   darkTextPrimary: "#FFFFFF",
   darkTextSecondary: "#A1A1A1",
   darkBorder: "#3A3A3C",

@@ -1,4 +1,4 @@
-import i18next, { InitOptions, LanguageDetectorAsyncModule } from 'i18next';
+import i18next, {  } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from '@/translations/locales/en.json';
 import hi from '@/translations/locales/hi.json';
@@ -12,11 +12,11 @@ const resources = {
 	hi: {translation: hi}
 };
 
-const languageDetectorPlugin: LanguageDetectorAsyncModule = {
+const languageDetectorPlugin = {
 	type: 'languageDetector',
 	async: true,
 	init: () => {},
-	detect: async (callback: (lang: string) => void | string = () => {}) => {
+	detect: async (callback) => {
 		try{
 		 await AsyncStorage.getItem(STORE_LANGUAGE_KEY).then((language) => {
                 if(language) callback(language);
@@ -26,7 +26,7 @@ const languageDetectorPlugin: LanguageDetectorAsyncModule = {
             console.log("Error while reading language", error);
         }
 	},
-	cacheUserLanguage: async (lang: string)=>{
+	cacheUserLanguage: async (lang)=>{
         try {
             await AsyncStorage.setItem(STORE_LANGUAGE_KEY, lang);
         }catch(error){
@@ -46,6 +46,6 @@ i18next
 		interpolation: {
 			escapeValue: false,
 		},
-	} as InitOptions);
+	});
 
 export default i18next;

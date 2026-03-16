@@ -1,4 +1,4 @@
-import { StyleProp, Text, TextProps, TextStyle } from 'react-native';
+import { Text } from 'react-native';
 import React from 'react';
 import { FONTS } from '@/constants/fonts';
 import { FONT_SIZES } from '@/constants/size';
@@ -14,14 +14,6 @@ const CustomText = ({
   lineHeight,
   type = 'primary',
   ...props
-}: TextProps & {
-  children?: React.ReactNode;
-  style?: TextStyle | TextStyle[] | StyleProp<TextStyle>;
-  fontFamily?: string;
-  fontSize?: number;
-  color?: string;
-  lineHeight?: number;
-  type?: 'primary' | 'secondary';
 }) => {
   const { theme } = useTheme();
 

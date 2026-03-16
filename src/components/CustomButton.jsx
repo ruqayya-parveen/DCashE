@@ -1,9 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   TouchableOpacity,
-  ViewStyle,
-  TextStyle,
-  TouchableOpacityProps,
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
@@ -13,18 +10,6 @@ import { FONTS } from '@/constants/fonts';
 import { useTheme } from '@/hooks/useTheme';
 import { COLORS } from '@/constants';
 
-export type CustomButtonType = {
-  text?: string;
-  wrapperStyle?: ViewStyle | ViewStyle[];
-  textStyle?: TextStyle;
-  onPress: () => void;
-  disabled?: boolean;
-  type?: 'filled' | 'outlined';
-  borderWidth?: number;
-  loading?: boolean;
-  leftChildren?: React.ReactNode;
-  rightChildren?: React.ReactNode;
-};
 
 const CustomButton = ({
   text,
@@ -38,7 +23,7 @@ const CustomButton = ({
   leftChildren,
   rightChildren,
   ...props
-}: TouchableOpacityProps & CustomButtonType) => {
+}) => {
   const { theme } = useTheme();
   return (
     <TouchableOpacity

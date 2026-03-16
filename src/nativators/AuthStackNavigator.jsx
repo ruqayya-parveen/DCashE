@@ -1,17 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthParamList } from '@/types/navigationTypes';
 import Login from '@/screens/auth/Login';
 import VerifyOtp from '@/screens/auth/VerifyOtp';
-const Stack = createStackNavigator<AuthParamList>();
+const Stack = createStackNavigator();
 
-type TScreenItem = {
-  name: keyof AuthParamList;
-  component: ComponentType<any>;
-};
 
-const screens: TScreenItem[] = [
+const screens = [
   {
     name: 'Login',
     component: Login,
@@ -34,4 +28,3 @@ const AuthStackNavigator = () => {
 
 export default AuthStackNavigator;
 
-const styles = StyleSheet.create({});

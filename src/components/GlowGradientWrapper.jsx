@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 import RNLiearGradient from 'react-native-linear-gradient';
 import { colorList, COLORS } from '@/constants';
-import { useTheme } from '@/hooks/useTheme';
 
 const DEFAULT_COLORS = {
   background: colorList.darkBackgroundPrimary,

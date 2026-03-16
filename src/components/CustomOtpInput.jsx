@@ -3,22 +3,16 @@ import { View, StyleSheet } from 'react-native';
 import CustomInput from './CustomInput';
 import { OTP_LENGTH, SIZES } from '@/constants';
 
-interface CustomOtpInputProps {
-  length?: number;
-  value: string;
-  onChange: (otp: string) => void;
-  error?: boolean;
-}
 
 export default function CustomOtpInput({
   length = OTP_LENGTH,
   value,
   onChange,
   error,
-}: CustomOtpInputProps) {
-  const inputs = useRef<(typeof CustomInput)[]>([]);
+}) {
+  const inputs = useRef([]);
 
-  const handleChange = (text: string, index: number) => {
+  const handleChange = (text, index) => {
     const newOtp = value.split('');
 
     newOtp[index] = text;
@@ -31,7 +25,7 @@ export default function CustomOtpInput({
     }
   };
 
-  const handleKeyPress = (e: any, index: number) => {
+  const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === 'Backspace' && !value[index] && index > 0) {
       inputs.current[index - 1]?.focus();
     }
@@ -69,7 +63,7 @@ const styles = StyleSheet.create({
 
   input: {
     width: SIZES.fifty,
-    height: SIZES.fifty,
+    // height: SIZES.forty,
     borderRadius: SIZES.eight,
     textAlign: 'left',
     paddingLeft: SIZES.four,

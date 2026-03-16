@@ -91,7 +91,7 @@ export default function Login() {
   );
 }
 
-const getStyles = (theme: 'light' | 'dark') =>
+const getStyles = (theme) =>
   StyleSheet.create({
     container: {
       flex: 1,

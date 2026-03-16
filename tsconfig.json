@@ -17,6 +17,6 @@
             "@utils/*": ["./src/utils/*"],
       }
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/utils/navigationUtils.js"],
+  "include": ["**/*.ts", "**/*.tsx", "src/utils/navigationUtils.js", "src/components/BaseView.jsx", "src/components/CustomButton.jsx", "src/components/CustomHeader.jsx", "src/components/CustomInput.jsx", "src/components/CustomOtpInput.jsx", "src/components/CustomText.jsx", "src/components/GlowGradientWrapper.jsx", "src/components/ToastConfig.jsx", "src/constants/appConstants.js", "src/constants/colors.js", "src/constants/eventNames.js", "src/constants/fonts.js", "src/constants/imagePath.js", "src/constants/index.js", "src/constants/size.js", "src/constants/storageKeys.js", "src/hooks/index.js", "src/hooks/useAppNavigation.jsx", "src/hooks/useTheme.jsx", "src/nativators/AppStackNavigator.jsx", "src/nativators/AuthStackNavigator.jsx", "src/nativators/Router.jsx", "src/screens/auth/Login.jsx", "src/screens/auth/SplashScreen.jsx", "src/screens/auth/VerifyOtp.jsx", "src/translations/i18next.js", "src/utils/handleError.js", "src/utils/helpers.js", "src/components/CustomToastMessage.js", "src/utils/UserPrefrences.js"],
   "exclude": ["**/node_modules", "**/Pods"]
 }

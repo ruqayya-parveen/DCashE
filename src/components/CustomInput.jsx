@@ -2,37 +2,20 @@
 import { FONTS } from '@/constants/fonts';
 import { SIZES } from '@/constants/size';
 import React, { forwardRef, useMemo, useState } from 'react';
-import { TextInputProps, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { TextInput, TextInputIconProps } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import { useTheme } from '@/hooks/useTheme';
 import { COLORS } from '@/constants';
 import CustomText from './CustomText';
 import GradientBorderWrapper from './GlowGradientWrapper';
+import { SVGS } from '@/constants/imagePath';
 
-interface CustomInputProps extends TextInputProps {
-  label?: string;
-  value?: string;
-  outlineColor?: string;
-  borderRadius?: number;
-  activeOutlineColor?: string;
-  onChangeText?: (text: string) => void;
-  leftChild?: React.ReactNode;
-  rightChild?: React.ReactNode;
-  containerStyle?: ViewStyle;
-  parentWrapperStyle?: ViewStyle;
-  inputStyle?: TextStyle;
-  labelStyle?: TextStyle;
-  hideLabel?: boolean;
-  isPassword?: boolean;
-  showCharCount?: boolean;
-  maxCharacters?: number;
-  /** Error handling props */
-  hasError?: boolean;
-  error?: string;
-  errorTextStyle?: TextStyle;
-}
 
-const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
+const RenderShowPasswordEye = ({onPess}) => {
+      return <SVGS.successTick onPress={onPess}/>
+    }
+
+const CustomInput = forwardRef(
   (
     {
       label,
@@ -48,8 +31,8 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
       showCharCount = false,
       maxCharacters = 200,
       hasError,
-      // error,
-      // errorTextStyle,
+      error,
+      errorTextStyle,
       ...props
     },
     ref,
@@ -59,6 +42,10 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
     const [showValue, setShowValue] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     // const [valueText, setValueText] = useState(value)
+
+    const toggleSecureInput = () =>{
+      setShowValue(!showValue);
+    }
 
     return (
       <GradientBorderWrapper
@@ -88,7 +75,7 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
               </CustomText>
             )
           }
-          left={leftChild}
+          left={leftChild || (isPassword && <RenderShowPasswordEye onPress={toggleSecureInput}/>)}
           right={rightChild}
           outlineColor={outlineColor || COLORS.secondaryBackground?.[theme]}
           activeOutlineColor={activeOutlineColor || COLORS.border?.[theme]}
@@ -99,7 +86,7 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
           textColor={COLORS.text?.[theme]}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          cursorColor={COLORS.primary as ColorValue}
+          cursorColor={COLORS.primary}
           theme={{
             colors: {
               // onSurfaceVariant: 'green',
@@ -136,7 +123,7 @@ const CustomInput = forwardRef<TextInputIconProps, CustomInputProps>(
 
 export default CustomInput;
 
-const getStyles = (theme: 'light' | 'dark') =>
+const getStyles = (theme) =>
   StyleSheet.create({
     wrapper: {
       // width: '100%',
