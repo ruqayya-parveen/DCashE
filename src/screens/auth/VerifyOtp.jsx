@@ -11,6 +11,7 @@ import {
   SIZES,
 } from '@/constants';
 import { useTheme } from '@/hooks/useTheme';
+import { resetTo } from '@/utils/navigationUtils';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +44,7 @@ export default function VerifyOtp() {
     return () => clearInterval(timeInterval);
   }, [resendTime]);
 
-  const handleOtpChange = (code) => {
+  const handleOtpChange = code => {
     setOpt(code);
     if (code.length === 4) {
       console.log('OTP:', code);
@@ -51,10 +52,11 @@ export default function VerifyOtp() {
     }
   };
 
-  const verifyOtp = (code) => {
+  const verifyOtp = code => {
     Keyboard.dismiss();
     if (code === '2222') {
       setIsOtpValid(true);
+      resetTo('AppNavigator');
       console.log(code);
     } else {
       setIsOtpValid(false);
@@ -136,7 +138,7 @@ export default function VerifyOtp() {
   );
 }
 
-const getStyles = (theme) =>
+const getStyles = theme =>
   StyleSheet.create({
     container: {
       flex: 1,

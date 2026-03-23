@@ -1,9 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { View } from 'react-native';
 import Svg, { Path, Defs, LinearGradient, Stop } from 'react-native-svg';
 import RNLiearGradient from 'react-native-linear-gradient';
-import { colorList, COLORS } from '@/constants';
+import { colorList, COLORS, SIZES } from '@/constants';
 
 const DEFAULT_COLORS = {
   background: colorList.darkBackgroundPrimary,
@@ -25,12 +25,21 @@ const GradientBorderWrapper = ({
   innerStyle = {},
 }) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const viewRef = useRef(null);
   const { width: w, height: h } = dimensions;
   const r = borderRadius;
   const s = borderWidth / 2;
 
-  // Top + Left + Right path (3 sides, no bottom)
-  // Starts at bottom-left (above corner), goes up → across top → down right → stops at bottom-right (above corner)
+  useLayoutEffect(() => {
+    const measureView = () => {
+      viewRef.current?.measure((x, y, width, height) => {
+        setDimensions({ width, height });
+      });
+    };
+
+    requestAnimationFrame(measureView);
+  }, []);
+
   const threeSidesPath =
     w && h
       ? `M ${s} ${h - r} L ${s} ${r} Q ${s} ${s} ${r} ${s} L ${w - r} ${s} Q ${
@@ -38,7 +47,6 @@ const GradientBorderWrapper = ({
         } ${s} ${w - s} ${r} L ${w - s} ${h - r}`
       : '';
 
-  // Bottom path only (with rounded corners on bottom-left and bottom-right)
   const bottomPath =
     w && h
       ? `M ${w - s} ${h - r} Q ${w - s} ${h - s} ${w - r} ${h - s} L ${r} ${
@@ -48,7 +56,8 @@ const GradientBorderWrapper = ({
 
   return (
     <View
-      style={[{ height: 50 }, style]}
+      ref={viewRef}
+      style={[{ height: SIZES.fiftyTwo }, style]}
       onLayout={({ nativeEvent }) => {
         const { width, height } = nativeEvent.layout;
         setDimensions({ width, height });

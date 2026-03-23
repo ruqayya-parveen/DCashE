@@ -12,9 +12,9 @@ const Router = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={'AppNavigator'} component={AppStackNavigator} />
         <Stack.Screen name={'Splash'} component={SplashScreen} />
         <Stack.Screen name={'AuthNavigator'} component={AuthStackNavigator} />
-        <Stack.Screen name={'AppNavigator'} component={AppStackNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
